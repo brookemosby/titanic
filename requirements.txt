@@ -1,2 +1,2 @@
 pandas
-sk.learn
+sklearn
