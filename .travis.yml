@@ -13,5 +13,5 @@ install:
   - pip install coveralls
 # command to run tests
 before_script:
-script: pytest
+script: coverage run --source=TitanicAttempt -m pytest
 after_success: -coveralls
