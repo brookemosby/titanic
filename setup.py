@@ -1,7 +1,7 @@
 
 from setuptools import setup
-setup(name='titanic_attempt',
-      version='0.1',
+setup(name='titanic',
+      version='1.3',
       description='Practice ML & travis/coveralls with titanic data set',
       long_description='',
       author='Brooke V Mosby',
@@ -13,7 +13,7 @@ setup(name='titanic_attempt',
       install_requires=[
           "pandas",
           "numpy",
-          "sk.learn"
+          "sklearn"
       ],
       packages=[],
       include_package_data=True,
