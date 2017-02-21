@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Titanic documentation build configuration file, created by
-# sphinx-quickstart on Sat Feb 18 14:31:37 2017.
+# TitanicAttempt documentation build configuration file, created by
+# sphinx-quickstart on Mon Feb 20 16:52:52 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Titanic'
+project = 'TitanicAttempt'
 copyright = '2017, Brooke Mosby'
 author = 'Brooke Mosby'
 
@@ -100,7 +100,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Titanicdoc'
+htmlhelp_basename = 'TitanicAttemptdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -127,7 +127,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Titanic.tex', 'Titanic Documentation',
+    (master_doc, 'TitanicAttempt.tex', 'TitanicAttempt Documentation',
      'Brooke Mosby', 'manual'),
 ]
 
@@ -137,7 +137,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'titanic', 'Titanic Documentation',
+    (master_doc, 'titanicattempt', 'TitanicAttempt Documentation',
      [author], 1)
 ]
 
@@ -148,8 +148,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Titanic', 'Titanic Documentation',
-     author, 'Titanic', 'One line description of project.',
+    (master_doc, 'TitanicAttempt', 'TitanicAttempt Documentation',
+     author, 'TitanicAttempt', 'One line description of project.',
      'Miscellaneous'),
 ]
 

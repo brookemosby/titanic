@@ -1,16 +1,13 @@
-.. Titanic documentation master file, created by
-   sphinx-quickstart on Sat Feb 18 14:31:37 2017.
+.. TitanicAttempt documentation master file, created by
+   sphinx-quickstart on Mon Feb 20 16:52:52 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Titanic's documentation!
-===================================
+Welcome to TitanicAttempt's documentation!
+==========================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
-
-
 
 Indices and tables
 ==================
