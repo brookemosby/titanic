@@ -1,14 +1,15 @@
 .. TitanicAttempt documentation master file, created by
-   sphinx-quickstart on Mon Feb 20 18:12:53 2017.
+   sphinx-quickstart on Tue Feb 21 17:05:03 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to TitanicAttempt's documentation!
+TitanicAttempt's API documentation
 ==========================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   
+   TitanicAttempt.rst
 
 
 Indices and tables
