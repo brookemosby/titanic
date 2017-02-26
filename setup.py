@@ -1,7 +1,7 @@
 
 from setuptools import setup
 setup(name='titanic',
-      version='1.6',
+      version='1.7',
       description='Practice ML & travis/coveralls with titanic data set',
       long_description='',
       author='Brooke V Mosby',
