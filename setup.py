@@ -1,7 +1,7 @@
 
 from setuptools import setup
 setup(name='titanic',
-      version='1.3',
+      version='1.6',
       description='Practice ML & travis/coveralls with titanic data set',
       long_description='',
       author='Brooke V Mosby',
@@ -15,8 +15,14 @@ setup(name='titanic',
           "numpy",
           "sklearn"
       ],
-      packages=[],
+      packages=['TitanicAttempt'],
       include_package_data=True,
+      package_data={
+              'data':['data/test.csv',
+                      'data/train.csv'
+                      ],
+              },
+      scripts=['TitanicAttempt/TitanicAttempt.py'],
       classifiers=[
           'Development Status :: 2 - Pre-Alpha',
           'Intended Audience :: Other Audience',
