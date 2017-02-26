@@ -83,13 +83,15 @@ def Produce_Predictions(FileName,train='data/train.csv',test='data/test.csv'):
     Uses Decision Tree to create predictions on who survived.
     returns nothing, creates 'example.csv'
     """
+    TestFileName=test
+    TrainFileName=train
     trainDF=pd.read_csv(train)
     train=Getting_Dummies(train,trainDF)
     test=Getting_Dummies(test,trainDF)
-    MLA=Create_Random_Forest()
+    MLA=Create_Random_Forest(TrainFileName)
     predictions = MLA.predict(test)
     predictions = pd.DataFrame(predictions, columns=['Survived'])
-    test = pd.read_csv( 'data/test.csv')
+    test = pd.read_csv(TestFileName)
     predictions = pd.concat((test.iloc[:, 0], predictions), axis = 1)
     predictions.to_csv(FileName, sep=",", index = False)
     #~ 75% :)
