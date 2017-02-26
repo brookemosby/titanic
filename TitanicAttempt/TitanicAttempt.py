@@ -1,9 +1,5 @@
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier as DTC
 from sklearn.ensemble import RandomForestClassifier as RFC
-from sklearn.neighbors import KNeighborsClassifier as KNC
-from sklearn.ensemble import VotingClassifier as VC
-from sklearn.linear_model import LogisticRegression as LR
 
 def Read_Files(FileName):
     """
@@ -68,17 +64,6 @@ def Getting_Dummies(DataFrame,train):
     return DataFrame
 
 
-def Create_Decision_Tree(train='data/train.csv'):
-    """
-    Creates Decision Tree fitted with default train='data/train.csv', returns Decision Tree
-    ~75%
-    """
-    trainDF=pd.read_csv(train)
-    train=Getting_Dummies(train,trainDF)
-    DT = DTC(random_state=99)
-    DT.fit(train.iloc[:, 1:], train.iloc[:, 0])
-    return DT
-
 def Create_Random_Forest(train='data/train.csv'):
     """
     Creates and returns Random Forest fitted with default parameter train='data/train.csv'
@@ -91,42 +76,6 @@ def Create_Random_Forest(train='data/train.csv'):
     RF.fit(train.iloc[:, 1:], train.iloc[:, 0])
     return RF
 
-def Create_KNeighbors(train='data/train.csv'):
-    """
-    Creates KNeighbors model fitted with default train='data/train.csv', returns KNeighbors model.
-    ~65%
-    """
-    trainDF=pd.read_csv(train)
-    train=Getting_Dummies(train,trainDF)
-    KN = KNC(n_neighbors=3)
-    KN.fit(train.iloc[:, 1:], train.iloc[:, 0])
-    return KN
-
-def Create_Logistic_Regression(train='data/train.csv'):
-    """
-    ~76%
-    """
-    trainDF=pd.read_csv(train)
-    train=Getting_Dummies(train,trainDF)
-    LogR= LR()
-    LogR.fit(train.iloc[:, 1:], train.iloc[:, 0])
-    return LogR
-
-
-def Create_Voting(train='data/train.csv'):
-    """
-    Creates and returns a model based off of the weighted classifiers Decision Tree, Random Forest and KNeighbors
-    ~76.5%- voting is soft and weights are [6,8,7]
-    """
-    trainDF=pd.read_csv(train)
-    train=Getting_Dummies(train,trainDF)
-    Clf1=Create_Decision_Tree()
-    Clf2=Create_Random_Forest()
-    Clf3=Create_Logistic_Regression()
-    Clf = VC(estimators=[('dt', Clf1), ('rf', Clf2), ('lr', Clf3)], voting='hard')
-    Clf.fit(train.iloc[:, 1:], train.iloc[:, 0])
-    return Clf
-    
 
 def Produce_Predictions(FileName,train='data/train.csv',test='data/test.csv'):
     """
@@ -137,7 +86,7 @@ def Produce_Predictions(FileName,train='data/train.csv',test='data/test.csv'):
     trainDF=pd.read_csv(train)
     train=Getting_Dummies(train,trainDF)
     test=Getting_Dummies(test,trainDF)
-    MLA=Create_Voting()
+    MLA=Create_Random_Forest()
     predictions = MLA.predict(test)
     predictions = pd.DataFrame(predictions, columns=['Survived'])
     test = pd.read_csv( 'data/test.csv')
