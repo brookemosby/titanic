@@ -98,4 +98,4 @@ def Produce_Predictions(FileName,train='data/train.csv',test='data/test.csv'):
     
     
 if __name__=="__main__":
-    Produce_Predictions('TestRun.csv')
+    Produce_Predictions('TestRun.csv') # pragma: no cover
