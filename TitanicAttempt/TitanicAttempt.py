@@ -9,9 +9,9 @@ def Read_Files(FileName):
     return DataFrame
 
 
-def Feature_Engineering(DataFrame,train):
+def Feature_Engineering(DataFrame='data/train.csv',train=Read_Files('data/train.csv')):
     """
-    Accepts pd.DataFrame, creates and returns new pd.DataFrame, with important features extracted and in a useable form
+    Accepts string for DataFrame file with default set as train.csv, and training set with default set as train.csv, creates and returns new pd.DataFrame, with important features extracted and in a useable form
     """
     DataFrame= Read_Files(DataFrame)
     titles=DataFrame['Name'].apply(lambda x: x.split(',')[1].split(' ')[1])
