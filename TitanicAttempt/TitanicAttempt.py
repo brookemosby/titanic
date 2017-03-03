@@ -3,15 +3,15 @@ from sklearn.ensemble import RandomForestClassifier as RFC
 
 def Read_Files(FileName):
     """
-    Accepts file name, reads in file, converts and returns pd.DataFrame type
+    Accepts file name string, reads in file, then converts and returns pd.DataFrame type
     """
     DataFrame=pd.read_csv(FileName)
     return DataFrame
 
 
-def Changing_Name_to_Titles(DataFrame):
+def Feature_Engineering(DataFrame,train):
     """
-    Accepts pd.DataFrame and takes from column name and creates column title filled with numbers corresponding to title type
+    Accepts pd.DataFrame, creates and returns new pd.DataFrame, with important features extracted and in a useable form
     """
     DataFrame= Read_Files(DataFrame)
     titles=DataFrame['Name'].apply(lambda x: x.split(',')[1].split(' ')[1])
@@ -19,59 +19,49 @@ def Changing_Name_to_Titles(DataFrame):
     for k,v in title_mapping.items():
         titles[titles == k] = v
     DataFrame["Title"] = titles
-    return DataFrame
 
-
-def Creating_NewCols(DataFrame):
-    """
-    Accepts pd.DataFrame and creates columns NameLen- len of name string & FamSize- # of siblings addded to # of parents & children.
-    Modifies Cabin column so that the cabin letter is mapped to a number corresponding to the cabin.
-    Deletes columns 'Parch', 'SibSp', and 'PassengerId', and then returns DataFrame
-    """
-    DataFrame= Changing_Name_to_Titles(DataFrame)
     DataFrame['NameLen']=DataFrame['Name'].apply(lambda x: len(x))
     DataFrame['FamSize']=DataFrame['SibSp']+DataFrame['Parch']
+    DataFrame['Has_Cabin'] = DataFrame["Cabin"].apply(lambda x: 0 if type(x) == float else 1)
     cabins=DataFrame['Cabin'].apply(lambda x:   str(x)[0])
     cabin_mapping={'A':3,'B':5,'C':5,'D':4,'E':4,'F':3,'G':2,'T':1,'n':10}
     for k,v in cabin_mapping.items():
         cabins[cabins==k]=v
-    DataFrame['Cabin']=cabins
+    DataFrame['Cabin']=cabins  
     del DataFrame['Parch']
     del DataFrame['SibSp']
     del DataFrame['PassengerId']
-    return DataFrame
 
-
-def Getting_Dummies(DataFrame,train):
-    """
-    Accepts DataFrame, and training set DataFrame, Creates dummmies for columns 'Pclass', 'Embarked', and 'Sex'.
-    Then deletes previous columns, along with 'Ticket', and fills in missing values for 'Age' and 'Fare'.
-    Returns DataFrame
-    """
-    
-    DataFrame=Creating_NewCols(DataFrame)
     pclass = pd.get_dummies( DataFrame.Pclass , prefix='Pclass' )
     sex = pd.get_dummies(DataFrame.Sex)
     embarked = pd.get_dummies(DataFrame.Embarked, prefix='Embarked')
     DataFrame=pd.concat([DataFrame,pclass,sex,embarked],axis=1)
     del DataFrame['Pclass']
     del DataFrame['Name']
-    del DataFrame['Sex']
     del DataFrame['Ticket']
+    del DataFrame['Sex']
     del DataFrame['Embarked']
+    
     DataFrame['Fare'].fillna(train['Fare'].median(), inplace = True)
+        # Mapping Fare
+    DataFrame.loc[ DataFrame['Fare'] <= 7.91, 'Fare'] 						        = 0
+    DataFrame.loc[(DataFrame['Fare'] > 7.91) & (DataFrame['Fare'] <= 14.454), 'Fare'] = 1
+    DataFrame.loc[(DataFrame['Fare'] > 14.454) & (DataFrame['Fare'] <= 31), 'Fare']   = 2
+    DataFrame.loc[ DataFrame['Fare'] > 31, 'Fare'] 							        = 3
+    DataFrame['Fare'] = DataFrame['Fare'].astype(int)
     DataFrame['Age'].fillna(train['Age'].median(), inplace = True)
+
     return DataFrame
 
 
 def Create_Random_Forest(train='data/train.csv'):
     """
-    Creates and returns Random Forest fitted with default parameter train='data/train.csv'
-    ~77% when there is 100 n_estimators
-    ~78.4% when there is 300 n_estimators
+    Creates and returns sklearn.ensemble.Random_Forest_Classifier fitted with default parameter train='data/train.csv' as the filename for training set.
+    ~77% accuracy when there is 100 n_estimators
+    ~78.4% accuracy when there is 300 n_estimators
     """
     trainDF=pd.read_csv(train)
-    train=Getting_Dummies(train,trainDF)
+    train=Feature_Engineering(train,trainDF)
     RF = RFC(min_samples_split=10, n_estimators= 700, criterion= 'gini', max_depth=None)
     RF.fit(train.iloc[:, 1:], train.iloc[:, 0])
     return RF
@@ -79,15 +69,15 @@ def Create_Random_Forest(train='data/train.csv'):
 
 def Produce_Predictions(FileName,train='data/train.csv',test='data/test.csv'):
     """
-    Accepts file name, 'example.csv', to print predictions too, along with default train='data/train.csv' & test='data/test.csv'.
-    Uses Decision Tree to create predictions on who survived.
-    returns nothing, creates 'example.csv'
+    Accepts file name, 'example.csv', along with default train='data/train.csv' & test='data/test.csv' 
+    Uses Random Forest to create predictions on who survived.
+    returns nothing, creates 'example.csv' in which predictions are contained for testing set.
     """
     TestFileName=test
     TrainFileName=train
     trainDF=pd.read_csv(train)
-    train=Getting_Dummies(train,trainDF)
-    test=Getting_Dummies(test,trainDF)
+    train=Feature_Engineering(train,trainDF)
+    test=Feature_Engineering(test,trainDF)
     MLA=Create_Random_Forest(TrainFileName)
     predictions = MLA.predict(test)
     predictions = pd.DataFrame(predictions, columns=['Survived'])
