@@ -9,7 +9,7 @@ def Read_Files(FileName):
     return DataFrame
 
 
-def Feature_Engineering(DataFrame='data/train.csv',train=Read_Files('data/train.csv')):
+def Feature_Engineering(DataFrame,train):
     """
     Accepts string for DataFrame file with default set as train.csv, and training set with default set as train.csv, creates and returns new pd.DataFrame, with important features extracted and in a useable form
     """
@@ -54,7 +54,7 @@ def Feature_Engineering(DataFrame='data/train.csv',train=Read_Files('data/train.
     return DataFrame
 
 
-def Create_Random_Forest(train='data/train.csv'):
+def Create_Random_Forest(train):
     """
     Creates and returns sklearn.ensemble.Random_Forest_Classifier fitted with default parameter train='data/train.csv' as the filename for training set.
     ~77% accuracy when there is 100 n_estimators
@@ -67,7 +67,7 @@ def Create_Random_Forest(train='data/train.csv'):
     return RF
 
 
-def Produce_Predictions(FileName,train='data/train.csv',test='data/test.csv'):
+def Produce_Predictions(FileName,train,test):
     """
     Accepts file name, 'example.csv', along with default train='data/train.csv' & test='data/test.csv' 
     Uses Random Forest to create predictions on who survived.
