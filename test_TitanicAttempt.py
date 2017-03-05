@@ -9,10 +9,10 @@ def test_Read_Files():
     test='TitanicAttempt/data/test.csv'
     train=TA.Read_Files(train)
     test=TA.Read_Files(test)
-    assert train['PassengerId'].min()==1
-    assert train['PassengerId'].max()==891
-    assert test['PassengerId'].min()==892
-    assert test['PassengerId'].max()==1309
+    assert type(train)==pd.DataFrame
+    assert type(test)==pd.DataFrame
+    assert not train.empty
+    assert not test.empty
 
 def test_Feature_Engineering():
     """Test function for creating dummies, by checking that the expected number of columns outputted are correct
@@ -24,6 +24,10 @@ def test_Feature_Engineering():
     train=TA.Feature_Engineering(train,trainDF)
     assert len(list(train))==16
     assert len(list(test))==15
+    assert type(train)==pd.DataFrame
+    assert type(test)==pd.DataFrame
+    assert not train.empty
+    assert not test.empty
 
 
 def test_Create_Random_Forest():
