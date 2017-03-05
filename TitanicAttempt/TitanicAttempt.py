@@ -11,7 +11,7 @@ def Read_Files(FileName):
 
 def Feature_Engineering(DataFrame,train):
     """
-    Accepts string for DataFrame file with default set as train.csv, and training set with default set as train.csv, creates and returns new pd.DataFrame, with important features extracted and in a useable form
+    Accepts string for DataFrame file and training set with creates and returns new pd.DataFrame, with important features extracted and in a useable form
     """
     DataFrame= Read_Files(DataFrame)
     titles=DataFrame['Name'].apply(lambda x: x.split(',')[1].split(' ')[1])
@@ -56,9 +56,8 @@ def Feature_Engineering(DataFrame,train):
 
 def Create_Random_Forest(train):
     """
-    Creates and returns sklearn.ensemble.Random_Forest_Classifier fitted with default parameter train='data/train.csv' as the filename for training set.
-    ~77% accuracy when there is 100 n_estimators
-    ~78.4% accuracy when there is 300 n_estimators
+    Accepts string filename for train and uses to create and return sklearn.ensemble.Random_Forest_Classifier fitted to training set.
+    ~78.4% accuracy 
     """
     trainDF=pd.read_csv(train)
     train=Feature_Engineering(train,trainDF)
@@ -69,9 +68,9 @@ def Create_Random_Forest(train):
 
 def Produce_Predictions(FileName,train,test):
     """
-    Accepts file name, 'example.csv', along with default train='data/train.csv' & test='data/test.csv' 
+    Accepts string FileName
     Uses Random Forest to create predictions on who survived.
-    returns nothing, creates 'example.csv' in which predictions are contained for testing set.
+    returns nothing, creates csv file named from parameter FileName in which predictions are contained for testing set.
     """
     TestFileName=test
     TrainFileName=train
