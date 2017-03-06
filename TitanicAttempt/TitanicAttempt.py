@@ -83,8 +83,6 @@ def Produce_Predictions(FileName,train,test):
     test = pd.read_csv(TestFileName)
     predictions = pd.concat((test.iloc[:, 0], predictions), axis = 1)
     predictions.to_csv(FileName, sep=",", index = False)
-    #~ 75% :)
-    
     
 if __name__=="__main__":
     Produce_Predictions('TestRun.csv') # pragma: no cover
