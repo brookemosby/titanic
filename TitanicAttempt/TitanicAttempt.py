@@ -1,19 +1,18 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier as RFC
 
-def Read_Files(FileName):
-    """
-    Accepts file name string, reads in file, then converts and returns pd.DataFrame type
-    """
-    DataFrame=pd.read_csv(FileName)
-    return DataFrame
-
-
 def Feature_Engineering(DataFrame,train):
     """
-    Accepts string for DataFrame file and training set with creates and returns new pd.DataFrame, with important features extracted and in a useable form
+    Extracts important features and writes them in usable form
+    Deletes features of little importance
+    
+    :param DataFrame: This is the file name of a csv file we wish to convert into a usable DataFrame.
+    :param train: This is training set corresponding to our csv file. Should be of type pandas.DataFrame
+    :returns: Returns csv file, after having been modified as a pandas.DataFrame type
     """
-    DataFrame= Read_Files(DataFrame)
+    
+    
+    DataFrame= pd.read_csv(DataFrame)
     titles=DataFrame['Name'].apply(lambda x: x.split(',')[1].split(' ')[1])
     title_mapping = {"the":5, "Mr.": 1, "Miss.": 2, "Mrs.": 3, "Master.": 4, "Dr.": 5, "Rev.": 6, "Major.": 7, "Col.": 7, "Mlle.": 2, "Mme.": 3, "Don.": 9, "Lady.": 10, "Countess.": 10, "Jonkheer.": 10, "Sir.": 9, "Capt.": 7, "Ms.": 2, "Dona.": 10}
     for k,v in title_mapping.items():
@@ -56,8 +55,10 @@ def Feature_Engineering(DataFrame,train):
 
 def Create_Random_Forest(train):
     """
-    Accepts string filename for train and uses to create and return sklearn.ensemble.Random_Forest_Classifier fitted to training set.
-    ~78.4% accuracy 
+    Fits Random Forest to training set.
+    
+    :param train: This is the file name of a csv file we wish to have fitted to a Random Forest, does not need to have features already extracted.
+    :returns: Returns sklearn.ensemble.Random_Forest_Classifier fitted to training set.
     """
     trainDF=pd.read_csv(train)
     train=Feature_Engineering(train,trainDF)
@@ -68,9 +69,12 @@ def Create_Random_Forest(train):
 
 def Produce_Predictions(FileName,train,test):
     """
-    Accepts string FileName
-    Uses Random Forest to create predictions on who survived.
-    returns nothing, creates csv file named from parameter FileName in which predictions are contained for testing set.
+    Produces predictions for testing set, based off of training set.
+    
+    :param FileName: This is the csv file name we wish to have our predictions exported to.
+    :param train: This is the file name of a csv file that will be the training set.
+    :param test: This is the file name of the testing set that predictions will be made for.
+    :returns: Returns nothing, creates csv file containing predictions for testing set.
     """
     TestFileName=test
     TrainFileName=train

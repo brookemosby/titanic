@@ -2,17 +2,6 @@
 from TitanicAttempt import TitanicAttempt as TA
 import sklearn
 import pandas as pd
-def test_Read_Files():
-    """Test function for reading in files, checks that expected amount of Passengers are correct for each DataFrame
-    """
-    train='TitanicAttempt/data/train.csv'
-    test='TitanicAttempt/data/test.csv'
-    train=TA.Read_Files(train)
-    test=TA.Read_Files(test)
-    assert type(train)==pd.DataFrame
-    assert type(test)==pd.DataFrame
-    assert not train.empty
-    assert not test.empty
 
 def test_Feature_Engineering():
     """Test function for creating dummies, by checking that the expected number of columns outputted are correct
